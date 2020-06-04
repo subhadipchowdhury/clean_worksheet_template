@@ -59,9 +59,6 @@
     
 \titleformat{\paragraph}{\orange\centering\normalfont\large\bfseries\scshape}{\theparagraph}{1em}{#1}
 
-
-\usepackage{parskip}
-
 %===========Colors==============
 
 \newcommand{\blue}{\color{blue!80!black}}
@@ -233,7 +230,11 @@ frametitle={%
 
 
 
-%=====================================
+%========No indent in paragraphs======
+
+\RequirePackage{parskip}
+
+
 %=====================================
 %=====================================
 
