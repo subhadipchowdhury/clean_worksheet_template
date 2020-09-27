@@ -1,5 +1,8 @@
 \documentclass{worksheet}
 
+\solutiontrue
+% \solutionfalse
+
 \assignmenttitle{Lecture 90 Worksheet}
 \assignmentcourse{\textsc{Subject 1234: Course title}}
 \assignmentsemester{Summer 2099}
@@ -33,7 +36,7 @@
     \end{prf}
     
     
-    \subsection{}
+    \paragraph{Question Topic}
     \begin{enumerate}[leftmargin=*, label=(\roman*)]
         \item Steps of
         \item the exercise
@@ -44,10 +47,10 @@
         \end{tasks}
     \end{enumerate}
     
-
+    \eoq
     
     \begin{solution}
-    Solution to the exercise.
+    Solution to the exercise. Uncomment the ``solutionfalse'' flag to make solutions invisible.
     \end{solution}
 
     
@@ -58,12 +61,24 @@
 	\begin{exmpl}[Title]{label_exmpl}
 	 An example.
 	\end{exmpl}
-    
-    \paragraph{Case 1: First case}
-    When example \ref{label_exmpl} is true.
-    \paragraph{Case 2: Second case}
-    When example \ref{label_exmpl} is false.
-
 	
+	\begin{digression}
+	    A digression into related topics.
+	\end{digression}
+    
+    \subsection{Case 1: First case}
+    When example \ref{label_exmpl} is true.
+    \begin{warning}
+     A warning. 
+     
+     \lipsum[1-1]
+    \end{warning}
+    \subsection{Case 2: Second case}
+    When example \ref{label_exmpl} is false.
+        
+        \subsubsection{Important Topic}
+        \lipsum[1-1]
+	
+	\sectionline{orange}{88}
 \end{document}	
 
