@@ -1,70 +1,79 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{worksheet}[1/29/2020 custom in-class worksheet class]
+\ProvidesClass{worksheet}[9/27/2020 custom in-class worksheet class]
 \LoadClass[twoside=false,letterpaper,11pt]{article}
 
 
-
-
-%==============FONT==================
+%===============FONT=====================
 \RequirePackage[frenchstyle,narrowiints,nofligatures,partialup,fullintlimits,fullsumlimits]{kpfonts}
 
-%=======Essential Packages===========
+%==============PACKAGES==================
 
+%====== Graphics ===
 \RequirePackage{graphicx}
 \RequirePackage{subcaption}
 \RequirePackage{framed}
 \RequirePackage{color,xcolor}
+\RequirePackage{float}
 
-\RequirePackage{tikz,circuitikz}
+
+%====== TIKZ =======
+
+\RequirePackage{tikz,circuitikz, tkz-euclide,tikz-3dplot}
+\usetkzobj{all}
 \usetikzlibrary{shapes.misc, positioning}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{snakes}
 
 
+%===== MATH ==========
+
 \RequirePackage{amsmath, mathtools}
-\RequirePackage[left=0.75in, right=0.75in, top=0.75in, bottom=0.75in]{geometry}
+\RequirePackage{amsthm,amssymb}
 \RequirePackage{enumitem}
-\RequirePackage{verbatim}
-\RequirePackage{float}
+
+
 \RequirePackage{multicol,array}
-
-
-\RequirePackage{todonotes}
 \RequirePackage{tasks}
 
+%======== GEOMETRY  ======
 
-%==========Typography================
+\RequirePackage[left=0.75in, right=0.75in, top=0.75in, bottom=0.75in]{geometry}
+
+%========= FORMATTING ====
+
+\RequirePackage{verbatim}
+\RequirePackage{lipsum}
+
 
 \RequirePackage{microtype}
 \DisableLigatures{encoding = *, family = *}
 
-%==========Section and Subsection Styling==========
+\usepackage{parskip}
 
-\RequirePackage[explicit]{titlesec}
-% \titleformat{<command>}[<shape>]{<format>}{<label>}{<sep>}{<before>}[<after>]
+\RequirePackage{todonotes}
 
-\fboxrule.2pt\fboxsep3pt
-\renewcommand\thesection{\Alph{section}}
+\usepackage{anyfontsize}
 
-\titleformat{\section}{\normalfont\large}{}{0pt}{\colorbox{orange!50}{\S\thesection. \textbf{#1}}}
+%=========Fancy Footnote===============
 
-%======= Subsections create Questions =====
+%Footnote Symbol
+\RequirePackage[symbol]{footmisc}
 
-\newcounter{question}
-\titleformat{\subsection}{}{}{-1em}{%
-    \stepcounter{question}%
-    \orange$\blacksquare$~\textbf{\othertailQ uestion~\thequestion.~#1}}
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
-%======= Paragraphs have center heading (Works like subsection) =====
-    
-\titleformat{\paragraph}{\orange\centering\normalfont\large\bfseries\scshape}{\theparagraph}{1em}{#1}
+%=====================================
+%%%%%%% fancy End of Section Line
+\RequirePackage[object=vectorian]{pgfornament}
+\newcommand{\sectionline}[2]{%
+  \nointerlineskip \vspace{.5\baselineskip}\hspace{\fill}
+  {\resizebox{0.5\linewidth}{1.2ex}
+    {\pgfornament[color = #1]{#2}
+    }}%
+    \hspace{\fill}
+    \par\nointerlineskip \vspace{.5\baselineskip}
+  }
 
-%===========Colors==============
-
-\newcommand{\blue}{\color{blue!80!black}}
-\newcommand{\orange}{\color{orange!60!black}}
-
-%==========Custom Math Commands==========
+%=========== Shortcut Commands ==============
 
 \newcommand{\la}{\langle}
 \newcommand{\ra}{\rangle}
@@ -90,34 +99,86 @@
 \DeclareMathOperator{\arcsec}{arcsec}
 \DeclareMathOperator{\arccot}{arccot}
 \DeclareMathOperator{\arccsc}{arccsc}
+
+%============= COLORS ===============
+
+\newcommand{\blue}{\color{blue!80!black}}
+\newcommand{\orange}{\color{orange!60!black}}
+
 \renewcommand{\em}{\orange\bfseries}
 
+%==================
 
-%==========Hyperlink Coloring==================
 
+%==========TITLE FORMATTING ==========
+
+
+\RequirePackage[explicit]{titlesec}
+% \titleformat{<command>}[<shape>]{<format>}{<label>}{<sep>}{<before>}[<after>]
+
+%=== SECTION ===
+
+\fboxrule0.5pt\fboxsep3pt
+\renewcommand\thesection{\Alph{section}}
+
+\titleformat{\section}{\normalfont\Large}{}{0pt}{\colorbox{orange!50}{\S\thesection. \textbf{#1}}}
+
+%====QUESTIONS === PARAGRAPH ====
+
+\newcounter{question}
+\titleformat{\paragraph}{\em\large}{}{}{%
+    \stepcounter{question}%
+    \hspace{-1em}$\blacksquare$~\othertailQ uestion~\thequestion.\hfill \fbox{#1}}
+
+% === End Of Question ===
+
+\newcommand{\miniscule}{\fontsize{4}{5}\selectfont}
+
+\newcommand{\eoq}{{\orange\hfill{\rule{0.25\textwidth}{1pt}{\miniscule~End of Question \thequestion~}\rule{0.25\textwidth}{1pt}}\hfill}}
+    
+%=== SUBSECTION ===
+    
+\titleformat{\subsection}{\orange\centering\normalfont\Large\bfseries\scshape}{}{0em}{#1}
+
+%=== SUBSUBSECTION ===
+
+
+\titleformat{\subsubsection}[wrap]{\filright}{}{0em}{{\em #1.}}
+
+\titlespacing{\subsubsection}
+{12pc}{1.5ex plus .1ex minus .2ex}{1pc}
+
+%=====================================
+
+
+
+
+%=========HYPERREF===============
 \RequirePackage{hyperref,cleveref}
 
 \hypersetup{
 	colorlinks=true,       % false: boxed links; true: colored links
-	linkcolor={red!60!black},          % color of internal links (change box color with linkbordercolor)
+	linkcolor={blue},          % color of internal links (change box color with linkbordercolor)
 	citecolor={green!50!black},        % color of links to bibliography
 	filecolor=magenta,      % color of file links
 	urlcolor=cyan           % color of external links
 }
 
+%============== Boxes ===============
 
-
-%=======Custom Math Sections=================
-
-\RequirePackage{amsthm,amssymb}
 \RequirePackage[framemethod=TikZ]{mdframed}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Solution
-\newenvironment{solution}
-  {\renewcommand\qedsymbol{$\blacksquare$}\begin{proof}[Solution]\blue}
-  {\end{proof}}
-  
+
+%%%%%%%%% Make Solution Invisible Based on Flag
+
+
+\RequirePackage{environ} 
+
+\newif\ifsolution
+
+\NewEnviron{solution}{\ifsolution\begin{proof}[Solution]\blue\BODY\end{proof}\fi}{} 
+\renewcommand\qedsymbol{$\blacksquare$}  
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Theorem
@@ -228,23 +289,115 @@ frametitle={%
 \begin{mdframed}[]\relax%
 \label{#2}}{\end{mdframed}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Warning
+\RequirePackage{fontawesome}
+
+\tikzset{
+  warningsymbol/.style={
+      rectangle,draw=red,
+      fill=white,scale=1,
+      overlay}}
+\mdfdefinestyle{warning}{%
+ hidealllines=true,leftline=true,
+ skipabove=12,skipbelow=12pt,
+ innertopmargin=0.4em,%
+ innerbottommargin=0.4em,%
+ innerrightmargin=0.7em,%
+ rightmargin=0.7em,%
+ innerleftmargin=1.7em,%
+ leftmargin=0.7em,%
+ middlelinewidth=.2em,%
+ linecolor=red,%
+ fontcolor=red!70!black,%
+ firstextra={\path let \p1=(P), \p2=(O) in ($(\x2,0)+0.5*(0,\y1)$)
+                           node[warningsymbol] {\faWarning};},%
+ secondextra={\path let \p1=(P), \p2=(O) in ($(\x2,0)+0.5*(0,\y1)$)
+                           node[warningsymbol] {\faWarning};},%
+ middleextra={\path let \p1=(P), \p2=(O) in ($(\x2,0)+0.5*(0,\y1)$)
+                           node[warningsymbol] {\faWarning};},%
+ singleextra={\path let \p1=(P), \p2=(O) in ($(\x2,0)+0.5*(0,\y1)$)
+                           node[warningsymbol] {\faWarning};},%
+}
+
+\newenvironment{warning}{
+    \begin{mdframed}[style=warning]
+}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%
+%% Digression
+%%%%%%%%%%%%%%%%
+
+\usetikzlibrary{calc,arrows}
+\tikzset{
+   excursus arrow/.style={%
+      line width=2pt,
+      draw=gray!40,
+      rounded corners=2ex,
+   },
+   excursus head/.style={
+      fill=white,
+      font=\bfseries\sffamily,
+      text=gray!80,
+      anchor=base west,
+   },
+}
+\mdfdefinestyle{digressionarrows}{%
+ singleextra={%
+      \path let \p1=(P), \p2=(O) in (\x2,\y1) coordinate (Q);
+      \path let \p1=(Q), \p2=(O) in (\x1,{(\y1-\y2)/2}) coordinate (M);
+      \path [excursus arrow, round cap-to]
+         ($(O)+(5em,0ex)$) -| (M) |- %
+         ($(Q)+(12em,0ex)$) .. controls +(0:16em) and +(185:6em) .. %
+         ++(23em,2ex);
+      \node [excursus head] at ($(Q)+(2.5em,-0.75pt)$) {Digression};},
+ firstextra={%
+      \path let \p1=(P), \p2=(O) in (\x2,\y1) coordinate (Q);
+      \path [excursus arrow,-to]
+         (O) |- %
+         ($(Q)+(12em,0ex)$) .. controls +(0:16em) and +(185:6em) .. %
+         ++(23em,2ex);
+      \node [excursus head] at ($(Q)+(2.5em,-2pt)$) {Digression};},
+ secondextra={%
+      \path let \p1=(P), \p2=(O) in (\x2,\y1) coordinate (Q);
+      \path [excursus arrow,round cap-]
+         ($(O)+(5em,0ex)$) -| (Q);},
+ middleextra={%
+      \path let \p1=(P), \p2=(O) in (\x2,\y1) coordinate (Q);
+      \path [excursus arrow]
+         (O) -- (Q);},
+   middlelinewidth=2.5em,middlelinecolor=white,
+   hidealllines=true,topline=true,
+   innertopmargin=0.5ex,
+   innerbottommargin=2.5ex,
+   innerrightmargin=2pt,
+   innerleftmargin=2ex,
+   skipabove=0.87\baselineskip,
+   skipbelow=0.62\baselineskip,
+}
 
 
-%========No indent in paragraphs======
-
-\RequirePackage{parskip}
+\newenvironment{digression}{
+    \begin{mdframed}[style=digressionarrows]
+}{\end{mdframed}}
 
 
 %=====================================
 %=====================================
+%=====================================
+%=====================================
 
-%==========Make Title=================
+
+% Title Page
+
+
+%===============================
 \renewcommand{\maketitle}{
     \begin{center}
 		{\orange\huge\scshape \@assignmentcourse}
 		\vspace{1em}
 		
-		{\Large\scshape \@assignmenttitle}
+		{\scshape\Large \@assignmenttitle}
 	\end{center}
 	\vspace{-0.5em}
 	\noindent\hrulefill
@@ -255,7 +408,7 @@ frametitle={%
 	
 	\vspace{-1em}
 	\noindent\hrulefill
-	
+		
 	\noindent {\orange \Large \textsc{\textbf{Title:}}} \@lecturetitle 
 	
 	\noindent {\orange \Large \textsc{\textbf{Summary:}}} \@lecturesummary
@@ -296,3 +449,5 @@ frametitle={%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+
+  

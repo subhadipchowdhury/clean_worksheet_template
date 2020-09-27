@@ -1,0 +1,84 @@
+\documentclass{worksheet}
+
+\solutiontrue
+% \solutionfalse
+
+\assignmenttitle{Lecture 90 Worksheet}
+\assignmentcourse{\textsc{Subject 1234: Course title}}
+\assignmentsemester{Summer 2099}
+\assignmentduedate{Apr 34}
+\instructorname{Firstname Lastname}
+\lecturetitle{Lecture Topic}
+\lecturesummary{A brief summary of lecture.}
+
+
+\begin{document}
+	\boldmath
+	\maketitle
+    \vspace{-1em}
+	
+ 
+	\section{First Section}
+    
+    Uses kpfonts.
+	
+	\begin{defn}{label_defn}
+	A definition.
+	\end{defn}
+
+
+    \begin{theo}[Theorem Title]{label_thm}
+	A Theorem that uses objects defined in  \ref{label_defn}. 
+	\end{theo}
+    
+    \begin{prf}{label_lem}
+    Proof of the theorem \ref{label_thm}.
+    \end{prf}
+    
+    
+    \paragraph{Question Topic}
+    \begin{enumerate}[leftmargin=*, label=(\roman*)]
+        \item Steps of
+        \item the exercise
+        \begin{tasks}(3)
+        \task three 
+        \task sub 
+        \task parts
+        \end{tasks}
+    \end{enumerate}
+    
+    \eoq
+    
+    \begin{solution}
+    Solution to the exercise. Uncomment the ``solutionfalse'' flag to make solutions invisible.
+    \end{solution}
+
+    
+	\section{Second Section}
+	
+	
+	
+	\begin{exmpl}[Title]{label_exmpl}
+	 An example.
+	\end{exmpl}
+	
+	\begin{digression}
+	    A digression into related topics.
+	\end{digression}
+    
+    \subsection{Case 1: First case}
+    When example \ref{label_exmpl} is true.
+    \begin{warning}
+     A warning. 
+     
+     \lipsum[1-1]
+    \end{warning}
+    \subsection{Case 2: Second case}
+    When example \ref{label_exmpl} is false.
+        
+        \subsubsection{Important Topic}
+        \lipsum[1-1]
+	
+	\sectionline{orange}{88}
+\end{document}	
+
