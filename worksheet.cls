@@ -48,7 +48,7 @@
 \RequirePackage{microtype}
 \DisableLigatures{encoding = *, family = *}
 
-\usepackage{parskip}
+
 
 \RequirePackage{todonotes}
 
@@ -448,6 +448,6 @@ frametitle={%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
+%=== Somehow moving this above breaks things ====??? ====
+\RequirePackage{parskip}
   
