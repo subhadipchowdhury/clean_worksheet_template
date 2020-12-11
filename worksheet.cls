@@ -1,6 +1,17 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{worksheet}[9/27/2020 custom in-class worksheet class]
-\LoadClass[twoside=false,letterpaper,11pt]{article}
+\ProvidesClass{worksheet}[12/10/2020 custom in-class worksheet class]
+\LoadClass[letterpaper,11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% In-class Worksheet class file
+% Ver 3.0 (12/10/2020)
+%
+% Author: Subhadip Chowdhury
+%
+% License:
+% CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/)
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %===============FONT=====================
@@ -18,22 +29,11 @@
 
 %====== TIKZ =======
 
-\RequirePackage{tikz,circuitikz, tkz-euclide,tikz-3dplot}
-\usetkzobj{all}
+\RequirePackage{tikz, tkz-euclide,tikz-3dplot}
 \usetikzlibrary{shapes.misc, positioning}
 \usetikzlibrary{arrows.meta}
-\usetikzlibrary{snakes}
+\usetikzlibrary{decorations}
 
-
-%===== MATH ==========
-
-\RequirePackage{amsmath, mathtools}
-\RequirePackage{amsthm,amssymb}
-\RequirePackage{enumitem}
-
-
-\RequirePackage{multicol,array}
-\RequirePackage{tasks}
 
 %======== GEOMETRY  ======
 
@@ -73,32 +73,7 @@
     \par\nointerlineskip \vspace{.5\baselineskip}
   }
 
-%=========== Shortcut Commands ==============
 
-\newcommand{\la}{\langle}
-\newcommand{\ra}{\rangle}
-\renewcommand{\phi}{\varphi}
-\newcommand{\vf}[1]{\frac{1}{#1}}
-\newcommand{\X}{\times}
-\newcommand{\leg}[2]{\left(\frac{#1}{#2}\right)}
-\newcommand{\Zroot}[1]{\mathbb{Z}[\sqrt{#1}]}
-\newcommand{\Qroot}[1]{\mathbb{Q}(\sqrt{#1})}
-\newcommand{\rh}{\rightharpoonup}
-\newcommand{\xrh}{\stackrel{*}{\rightharpoonup}}
-\newcommand{\blank}{\hspace{10pt}}
-\newcommand{\tripnorm}{\|\hspace{-1pt}|}
-\newcommand{\nin}{\not\in}
-\renewcommand{\*}{\star}
-\newcommand{\cis}{\textup{c}i\textup{s }}
-\newcommand{\R}{\mathbb{R}}
-\renewcommand{\d}{\partial}
-\newcommand{\grad}{\nabla}
-\newcommand{\tr}{\mathbf{tr}}
-\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
-\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
-\DeclareMathOperator{\arcsec}{arcsec}
-\DeclareMathOperator{\arccot}{arccot}
-\DeclareMathOperator{\arccsc}{arccsc}
 
 %============= COLORS ===============
 
@@ -151,6 +126,26 @@
 %=====================================
 
 
+%===== MATH ==========
+
+\RequirePackage{amsmath, mathtools}
+\RequirePackage{amsthm,amssymb}
+\RequirePackage{multicol,array}
+
+
+\RequirePackage{enumitem}
+\setlist[enumerate]{leftmargin=*, align=left, itemindent=*}
+% \setlist[enumerate,1]{label = \arabic*.,ref   = \arabic*}
+\setlist[enumerate,1]{label = (\alph*), ref = \thequestion.\alph*}
+\setlist[enumerate,2]{label = (\roman*), ref= \theenumii.\roman*}
+\setlist[itemize]{leftmargin=*, align=left, itemindent=*}
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\triangleright$}
+
+\RequirePackage{tasks}
+\settasks{label=(\roman*), item-indent  = 2em , label-width  = 2em , label-offset = 0pt}
+
+%=====================================
 
 
 %=========HYPERREF===============
@@ -166,130 +161,155 @@
 
 %============== Boxes ===============
 
-\RequirePackage[framemethod=TikZ]{mdframed}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Solution
-
-%%%%%%%%% Make Solution Invisible Based on Flag
-
+%%%%%%%%%%%%%%%%%% Numbered and non-numbered Environments %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{environ} 
+\RequirePackage[framemethod=TikZ]{mdframed}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Solution %%%%%%%%% Make Solution Invisible Based on Flag
 
 \newif\ifsolution
 
 \NewEnviron{solution}{\ifsolution\begin{proof}[Solution]\blue\BODY\end{proof}\fi}{} 
 \renewcommand\qedsymbol{$\blacksquare$}  
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Proof %%%%%%%%%
+
+\NewEnviron{prf}[2][]
+    {%
+        \mdfsetup{%
+            frametitle={%
+            \tikz[baseline=(current bounding box.east),outer sep=0pt]
+            \node[anchor=east,rectangle,fill=red!20] {\strut Proof of~\cref{#2}.} ;},%
+            innertopmargin=5pt,linecolor=red!20,%
+            linewidth=2pt,topline=true,%
+            frametitleaboveskip=\dimexpr-\ht\strutbox\relax%
+            }%
+        \begin{mdframed}\BODY\qed\end{mdframed}%
+    }
+
+  
+%%%%%%%%%%% All environments get the same counter, except Questions. %%%%%%%%%%%%%
+
+  \newcounter{counter} \setcounter{counter}{0}
+  
+
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Theorem
-\newcounter{theo}[section] \setcounter{theo}{0}
-\renewcommand{\thetheo}{\Alph{section}.\arabic{theo}}
-\newenvironment{theo}[2][]{%
-\refstepcounter{theo}%
-\ifstrempty{#1}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=blue!20]
-{\strut Theorem~\thetheo};}}
-}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=blue!20]
-{\strut Theorem~\thetheo:~#1};}}%
-}%
-\mdfsetup{innertopmargin=10pt,linecolor=blue!20,%
-linewidth=2pt,topline=true,backgroundcolor= black!5,%
-frametitleaboveskip=\dimexpr-\ht\strutbox\relax
-}
-\begin{mdframed}[]\relax%
-\label{#2}}{\end{mdframed}}
+%Theorem %%%%%%%%%
 
+\newcommand{\thetheo}{\Alph{section}.\arabic{counter}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Definition
-\newcounter{defn}[section] \setcounter{defn}{0}
-\renewcommand{\thedefn}{\Alph{section}.\arabic{defn}}
-\newenvironment{defn}[2][]{%
-\refstepcounter{defn}%
-\ifstrempty{#1}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=green!90!black]
-{\strut Definition~\thedefn};}}
-}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=green!90!black]
-{\strut Definition~\thedefn:~#1};}}%
-}%
-\mdfsetup{innertopmargin=10pt,linecolor=green!90!black,%
-linewidth=2pt,topline=true,%
-frametitleaboveskip=\dimexpr-\ht\strutbox\relax
-}
-\begin{mdframed}[]\relax%
-\label{#2}}{\end{mdframed}}
+\NewEnviron{theo}[2][]
+    {
+        \refstepcounter{counter}%
+        \ifstrempty{#1}%
+            {%if no title
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rectangle,fill=blue!20]
+                    {\strut Theorem~\thetheo};}
+                }
+            }
+            {%else
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rectangle,fill=blue!20]
+                    {\strut Theorem~\thetheo:~#1};}%
+                }%
+            }
+            \mdfsetup{%common in both cases
+                innertopmargin=5pt,linecolor=blue!20,%
+                linewidth=2pt,topline=true,backgroundcolor= black!5,%
+                frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+            }
+            \begin{mdframed}\label[theorem]{#2}{\it \BODY}\end{mdframed}%
+    }
+    
+\crefname{theorem}{theorem}{theorems}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Proof
-\newcounter{prf}[section]\setcounter{prf}{0}
-\renewcommand{\theprf}{\Alph{section}.\arabic{prf}}
-\newenvironment{prf}[2][]{%
-\refstepcounter{prf}%
-\ifstrempty{#1}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=red!20]
-{\strut Proof~\theprf};}}
-}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=red!20]
-{\strut Proof~\theprf:~#1};}}%
-}%
-\mdfsetup{innertopmargin=10pt,linecolor=red!20,%
-linewidth=2pt,topline=true,%
-frametitleaboveskip=\dimexpr-\ht\strutbox\relax
-}
-\begin{mdframed}[]\relax%
-\label{#2}}{\qed\end{mdframed}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Example
-\newcounter{exmpl}[section] \setcounter{exmpl}{0}
-\renewcommand{\theexmpl}{\Alph{section}.\arabic{exmpl}}
-\newenvironment{exmpl}[2][]{%
-\refstepcounter{exmpl}%
-\ifstrempty{#1}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=black!10]
-{\strut Example~\theexmpl};}}
-}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=black!10]
-{\strut Example~\theexmpl:~#1};}}%
-}%
-\mdfsetup{%
-    innertopmargin=10pt,innerleftmargin=1em,%
-    linewidth=1pt,topline=true,%
-    backgroundcolor= blue!7,%
-    innerrightmargin=1em,%
-    frametitleaboveskip=\dimexpr-\ht\strutbox\relax
-}
-\begin{mdframed}[]\relax%
-\label{#2}}{\end{mdframed}}
+%Definition %%%%%%%%%
+
+\newcommand{\thedefn}{\Alph{section}.\arabic{counter}}
+
+\NewEnviron{defn}[2][]
+    {
+        \refstepcounter{counter}%
+        \ifstrempty{#1}%
+            {%if no title
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rectangle,fill=green!90!black]
+                    {\strut Definition~\thetheo};}
+                }
+            }
+            {%else
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rectangle,fill=green!90!black]
+                    {\strut Definition~\thetheo:~#1};}%
+                }%
+            }
+            \mdfsetup{%common in both cases
+                innertopmargin=5pt,linecolor=green!90!black,%
+                linewidth=2pt,topline=true,%
+                frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+            }
+            \begin{mdframed}\label[definition]{#2}\BODY\end{mdframed}%
+    }
+    
+\crefname{definition}{definition}{definitions}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Example
+
+\newcommand{\theexmpl}{\Alph{section}.\arabic{counter}}
+
+\NewEnviron{exmpl}[2][]
+    {%
+        \refstepcounter{counter}%
+        \ifstrempty{#1}%
+            {%
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rectangle,fill=black!10]
+                    {\strut Example~\theexmpl};}
+                }
+            }%
+            {%else
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rectangle,fill=black!10]
+                    {\strut Example~\theexmpl:~#1};}
+                }%
+            }%
+            \mdfsetup{%
+                innertopmargin=5pt,innerleftmargin=1em,%
+                linewidth=1pt,topline=true,%
+                backgroundcolor= blue!7,%
+                innerrightmargin=1em,%
+                frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+            }
+        \begin{mdframed}\label[example]{#2}\BODY\end{mdframed}%
+    }
+
+\crefname{example}{example}{examples}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Warning
 \RequirePackage{fontawesome}
 
@@ -320,9 +340,9 @@ frametitle={%
                            node[warningsymbol] {\faWarning};},%
 }
 
-\newenvironment{warning}{
+\NewEnviron{warning}[1][Warning:]{
     \begin{mdframed}[style=warning]
-}{\end{mdframed}}
+    \noindent{\textbf{#1}} \BODY \end{mdframed}}
 
 %%%%%%%%%%%%%%%%
 %% Digression
@@ -375,11 +395,9 @@ frametitle={%
    skipabove=0.87\baselineskip,
    skipbelow=0.62\baselineskip,
 }
+    
 
-
-\newenvironment{digression}{
-    \begin{mdframed}[style=digressionarrows]
-}{\end{mdframed}}
+\NewEnviron{digression}{\begin{mdframed}[style=digressionarrows] \BODY \end{mdframed}}
 
 
 %=====================================
@@ -404,7 +422,7 @@ frametitle={%
 	
 	\vspace{-0.5em}
 	
-	\noindent{\bfseries\large\@assignmentsemester\hspace{10em}\@instructorname\hfill \@assignmentduedate}
+	\noindent{\bfseries\large\@assignmentsemester\hspace{12em}\@instructorname\hfill \@assignmentduedate}
 	
 	\vspace{-1em}
 	\noindent\hrulefill
@@ -451,3 +469,32 @@ frametitle={%
 %=== Somehow moving this above breaks things ====??? ====
 \RequirePackage{parskip}
   
+
+
+%=========== Shortcut Commands ==============
+
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\renewcommand{\phi}{\varphi}
+\newcommand{\vf}[1]{\frac{1}{#1}}
+\newcommand{\X}{\times}
+\newcommand{\leg}[2]{\left(\frac{#1}{#2}\right)}
+\newcommand{\Zroot}[1]{\mathbb{Z}[\sqrt{#1}]}
+\newcommand{\Qroot}[1]{\mathbb{Q}(\sqrt{#1})}
+\newcommand{\rh}{\rightharpoonup}
+\newcommand{\xrh}{\stackrel{*}{\rightharpoonup}}
+\newcommand{\blank}{\hspace{10pt}}
+\newcommand{\tripnorm}{\|\hspace{-1pt}|}
+\newcommand{\nin}{\not\in}
+\renewcommand{\*}{\star}
+\newcommand{\cis}{\textup{c}i\textup{s }}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\d}{\partial}
+\newcommand{\grad}{\nabla}
+\newcommand{\tr}{\mathbf{tr}}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arccsc}{arccsc}
+\DeclareMathOperator{\charpoly}{charpoly}

@@ -22,24 +22,38 @@
     
     Uses kpfonts.
 	
-	\begin{defn}{label_defn}
+	\begin{defn}[Definition Title]{label_defn1}
 	A definition.
 	\end{defn}
+	    
+	Some text.
+	    
+	    
+	\begin{defn}[]{label_defn2}
+	A definition without a title.
+	\end{defn}
+    
 
 
     \begin{theo}[Theorem Title]{label_thm}
-	A Theorem that uses objects defined in  \ref{label_defn}. 
+	A Theorem that uses objects defined in \cref{label_defn2}. 
 	\end{theo}
+	
+	Some other text.
     
-    \begin{prf}{label_lem}
-    Proof of the theorem \ref{label_thm}.
+    \begin{prf}{label_thm}
+    Proof text ends in qed symbol.
     \end{prf}
     
-    
-    \paragraph{Question Topic}
-    \begin{enumerate}[leftmargin=*, label=(\roman*)]
-        \item Steps of
-        \item the exercise
+
+    \paragraph{Question Topic or Number of Points}
+    \begin{enumerate}
+        \item First Step \label{step_a}
+        \begin{enumerate}
+            \item  first substep \label{substep_a_i}.
+            \item  second substep following \ref{substep_a_i}.
+        \end{enumerate}
+        \item Second step following \ref{step_a}.
         \begin{tasks}(3)
         \task three 
         \task sub 
@@ -59,25 +73,37 @@
 	
 	
 	\begin{exmpl}[Title]{label_exmpl}
-	 An example.
+	 \begin{itemize}
+        \item First example 
+        \begin{itemize}
+            \item  Note $1$
+            \item  Note $2$
+        \end{itemize}
+        \item Second example
+    \end{itemize}
 	\end{exmpl}
 	
+	\begin{defn}[Definition Title]{label_defn3}
+	A definition.
+	\end{defn}
+	
 	\begin{digression}
-	    A digression into related topics.
+	    A digression into tangentially related topics.
 	\end{digression}
     
+    
+    
     \subsection{Case 1: First case}
-    When example \ref{label_exmpl} is true.
-    \begin{warning}
-     A warning. 
-     
+    When  \cref{label_exmpl} is true.
+    \begin{warning}[A Warning:] %default is Warning:
      \lipsum[1-1]
     \end{warning}
+    
     \subsection{Case 2: Second case}
     When example \ref{label_exmpl} is false.
         
         \subsubsection{Important Topic}
-        \lipsum[1-1]
+        \lipsum[2-2]
 	
 	\sectionline{orange}{88}
 \end{document}	
