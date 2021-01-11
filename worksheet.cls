@@ -19,6 +19,20 @@
 
 %==============PACKAGES==================
 
+
+%=========HYPERREF===============
+\RequirePackage{hyperref,cleveref}
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor={blue},          % color of internal links (change box color with linkbordercolor)
+	citecolor={green!50!black},        % color of links to bibliography
+	filecolor=magenta,      % color of file links
+	urlcolor=cyan,           % color of external links
+}
+
+
+
 %====== Graphics ===
 \RequirePackage{graphicx}
 \RequirePackage{subcaption}
@@ -166,16 +180,6 @@
 %=====================================
 
 
-%=========HYPERREF===============
-\RequirePackage{hyperref,cleveref}
-
-\hypersetup{
-	colorlinks=true,       % false: boxed links; true: colored links
-	linkcolor={blue},          % color of internal links (change box color with linkbordercolor)
-	citecolor={green!50!black},        % color of links to bibliography
-	filecolor=magenta,      % color of file links
-	urlcolor=cyan           % color of external links
-}
 
 %============== Boxes ===============
 
@@ -644,6 +648,16 @@
    \gdef\@lecturesummary{#1}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\AtBeginDocument{
+    \hypersetup{
+    	pdftitle={\@assignmenttitle},
+    	pdflang={en-US},
+    	pdfauthor={\@instructorname},
+    	pdfsubject={\@lecturetitle}
+    }
+}
+
+
 
 %%%%%% Header and Footer %%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{fancyhdr}
@@ -658,6 +672,7 @@
 \lfoot{}
 \rfoot{}
 \cfoot{\bf \thepage}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
