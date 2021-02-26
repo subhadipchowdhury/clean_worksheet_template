@@ -4,7 +4,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % In-class Worksheet class file
-% Ver 3.0 (12/10/2020)
+% Ver 4.0 (02/26/2020)
 %
 % Author: Subhadip Chowdhury
 %
@@ -135,12 +135,13 @@
 	\hspace{-1em}$\blacksquare$~Question~\thequestion.\hfill \fbox{#1}}
 
 \renewcommand{\theparagraph}{\thequestion}
+\newcommand{\question}[2][]{\paragraph{#1}{{\itshape #2}}}
 
-% === End Of Question ===
+% % === End Of Question (Deprecated) ===
 
-\newcommand{\miniscule}{\fontsize{4}{5}\selectfont}
+% \newcommand{\miniscule}{\fontsize{4}{5}\selectfont}
 
-\newcommand{\eoq}{{\orange\hfill{\rule{0.25\textwidth}{1pt}{\miniscule~End of Question \thequestion~}\rule{0.25\textwidth}{1pt}}\hfill}}
+% \newcommand{\eoq}{{\orange\hfill{\rule{0.25\textwidth}{1pt}{\miniscule~End of Question \thequestion~}\rule{0.25\textwidth}{1pt}}\hfill}}
 
 %=== SUBSECTION ===
 
@@ -320,6 +321,96 @@
 }
 
 \crefname{axiom}{axiom}{axioms}
+
+
+
+
+%%%%%%%%%%%%%%%%
+%Proposition %%%%%%
+%%%%%%%%%%%%%%%%
+
+% Usage:
+% \begin{prop}[optional title]{label}
+%	theorem contents
+% \end{prop}
+
+
+\newcommand{\theprop}{\arabic{section}.\arabic{counter}}
+
+\NewEnviron{prop}[2][]
+    {
+        \refstepcounter{counter}%
+        \ifstrempty{#1}%
+            {%if no title
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rounded rectangle,fill=lightbluecomp]
+                    {\strut Proposition~\theprop};}
+                }
+            }
+            {%else
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rounded rectangle,fill=lightbluecomp]
+                    {\strut Proposition~\theprop:~#1};}%
+                }%
+            }
+            \mdfsetup{%common in both cases
+                innertopmargin=5pt,linecolor=lightbluemono,%
+                linewidth=2pt,topline=true,backgroundcolor= lightblue,%
+                frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+            }
+            \begin{mdframed}\label[proposition]{#2}{\it \BODY}\end{mdframed}%
+    }
+    
+\crefname{proposition}{proposition}{propositions}
+
+
+%%%%%%%%%%%%%%%%
+%Claim %%%%%%
+%%%%%%%%%%%%%%%%
+
+% Usage:
+% \begin{claim}[optional title]{label}
+%	claim contents
+% \end{claim}
+
+
+\newcommand{\theclaim}{\arabic{section}.\arabic{counter}}
+
+\NewEnviron{claim}[2][]
+    {
+        \refstepcounter{counter}%
+        \ifstrempty{#1}%
+            {%if no title
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rounded rectangle,fill=lightbluecomp]
+                    {\strut Claim~\theclaim};}
+                }
+            }
+            {%else
+                \mdfsetup{%
+                    frametitle={%
+                    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+                    \node[anchor=east,rounded rectangle,fill=lightbluecomp]
+                    {\strut Claim~\theclaim:~#1};}%
+                }%
+            }
+            \mdfsetup{%common in both cases
+                innertopmargin=5pt,linecolor=lightbluemono,%
+                linewidth=2pt,topline=true,backgroundcolor= lightblue,%
+                frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+            }
+            \begin{mdframed}\label[claim]{#2}{\it \BODY}\end{mdframed}%
+    }
+    
+\crefname{claim}{claim}{claims}
+
+
 
 
 

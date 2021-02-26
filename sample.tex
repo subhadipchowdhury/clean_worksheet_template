@@ -26,68 +26,7 @@
 	A definition. The title is optional.
 	\end{defn}
 	    
-	We can have numbered list as follows:
-    \begin{enumerate}
-    
-    \item  Vectors and Matrices are written as $\vec{r}(t)=\begin{bmatrix}1 & 2\\ 3 & 4\end{bmatrix}$.
-    
-    \item Typewriter font is written as {\tt Computer Code}.
-    \end{enumerate}
-    
-    or itemized list as follows:
-    
-    \begin{itemize} %Use the itemize environment to make an unordered list.
-    
-    
-            
-    \item Here is how to write a table such as \cref{table:arrows}.
-    
-     
-    \begin{table}[!ht]
-            \renewcommand{\arraystretch}{1.5} %Use this multiplier to increase row height
-            \centering
-            \begin{tabular}{c|c|c|c|}
-            {} & $f(x,y)<0$ & $f(x,y)=0$ & $f(x,y)>0$  \\
-            \hline
-            $g(x,y)<0$ & $\swarrow$ & $\downarrow$ & $\searrow$ \\
-            \hline
-            $g(x,y)=0$ & $\leftarrow$ & $\cdot$ & $\rightarrow$ \\
-            \hline
-            $g(x,y)>0$ & $\nwarrow$ & $\uparrow$ & $\nearrow$ \\
-            \hline
-            \end{tabular}
-            \caption{Arrows}
-            \label{table:arrows}
-    \end{table}
-    
-    \item  When we need more than one line to align nicely:
-           	\begin{align*}
-        	    y' &= \mu - y^2 &\text{\em (saddle-node)}\\ %Emphasis is orange and bold by default
-        	    y' &= \mu y - y^2 &\text{\em (transcritical)}\\
-        	    y' &= \mu y -y^3 &\text{\em (supercritical pitchfork)}\\
-        	    y' &= \mu y +y^3 &\text{\em (subcritical pitchfork)}
-        	\end{align*}
-
-    
-    \item If you need to label each line, you can get rid of the star from {\tt align*}
-            \begin{align}
-                \frac{dx}{dt} &= f(x,y,t) \\ 
-        	    \frac{dy}{dt} &= g(x,y,t)
-            \end{align}
-    
-    \item 
-    You can insert figures such as \cref{fig:arcsin} using {\tt figure} environment.
-    \begin{figure}[!ht] % This means draw the figure either [h]ere, as in right after previous line, or at the [t]op of the page if there's not enough space
-        \centering
-        \includegraphics[width=0.4\textwidth]{images/picture.png}
-        \caption{$\arcsin x$}
-        \label{fig:arcsin}
-    \end{figure}
-    
-    \end{itemize}
-   
-	
-	
+	Typewriter font is written as {\tt Computer Code}.
 	
 	\begin{exmpl}[Title]{label_exmpl}
 	 \begin{itemize}
@@ -115,7 +54,7 @@
     \end{prf}
     
 
-    \paragraph{Automatic Question numbers in References}
+    \question[Automatic Question numbering]{
     \begin{enumerate}
         \item Greek letters and uppercase math letters are always upright. Such as \label{step_a}
         \begin{enumerate}
@@ -129,9 +68,8 @@
         \task ??    
         \task Profit
         \end{tasks}
-    \end{enumerate}
+    \end{enumerate}}
     
-    % \eoq %This is usually not needed, only used for formatting nicely.
     
     \begin{solution}
     Solution to the exercise. Uncomment the ``solutionfalse'' flag to make solutions invisible.
@@ -142,10 +80,7 @@
 	This is a note with a custom title. Default is `Note:'.
 	\end{note}
 	
-	
-%%%%%%%%%%%%%%%%%%%%%%
-%\newpage %Uncomment to force a page break
-%%%%%%%%%%%%%%%%%%%%%%
+
     
 	\section{Second Section}
 	
